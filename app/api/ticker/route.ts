@@ -1,32 +1,28 @@
-import { CoinData } from "@/types";
+import { CoinInfo } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  const url = `https://data-api.binance.vision/api/v3/ticker/24hr?symbol=ETHUSDT`;
+
   try {
-    const response = await fetch(
-      "https://api.freecryptoapi.com/v1/getData?symbol=ETH",
-      {
-        cache: "no-store",
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_SECRET_FREECRYPTOAPI_KEY}`,
-        },
-      },
-    );
+    const res = await fetch(url, {
+      next: { revalidate: 60 },
+    });
 
-    const rawText = await response.text();
-
-    if (!response.ok) {
-      console.error(`Status: ${response.status}. Body: ${rawText}`);
-      return NextResponse.json({ status: response.status });
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: `Binance API responded with ${res.status}` },
+        { status: 502 },
+      );
     }
 
-    const data = JSON.parse(rawText) as CoinData;
+    const data = (await res.json()) as CoinInfo;
+
     return NextResponse.json(data);
   } catch (err) {
     console.error(err);
     return NextResponse.json(
-      { error: "Failed to fetch data" },
+      { error: "Failed to fetch data from Binance" },
       { status: 500 },
     );
   }

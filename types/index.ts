@@ -6,16 +6,10 @@ export type Post = {
 
 export type CoinInfo = {
   symbol: string;
-  last: string;
-  last_btc: string;
-  lowest: string;
-  highest: string;
-  date: string;
-  daily_change_percentage: string;
-  source_exchange: string;
-};
-
-export type CoinData = {
-  status: string;
-  symbols: CoinInfo[];
+  lastPrice: string;
+  lowPrice: string;
+  highPrice: string;
+  closeTime: string;
+  priceChangePercent: string;
+  volume: string;
 };

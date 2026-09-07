@@ -1,38 +1,48 @@
 "use client";
 
 import useSWR from "swr";
-import { CoinData } from "@/types";
+import { CoinInfo } from "@/types";
+import { cn } from "@/utils/utils";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string): Promise<CoinInfo> =>
+  fetch(url).then((r) => {
+    if (!r.ok) throw new Error("Network error");
+    return r.json();
+  });
 
 export default function CryptoCoin() {
-  const { data, error, isLoading } = useSWR<CoinData>("/api/ticker", fetcher);
+  const { data, error, isLoading } = useSWR(`/api/ticker`, fetcher, {
+    refreshInterval: 60_000,
+    keepPreviousData: true,
+  });
 
   if (error) return <div className="text-red-500">Failed to load ticker.</div>;
-  if (isLoading) return <div>Loading real-time prices...</div>;
-  if (!data || !data.symbols || data.symbols.length === 0) {
-    return <div>No active tickers found.</div>;
-  }
+  if (isLoading) return <div>Loading real-time price</div>;
+  if (!data) return <div>No active tickers found.</div>;
 
-  const coin = data.symbols[0];
-  const isNegative = coin.daily_change_percentage.startsWith("-");
-  const changePercent = parseFloat(coin.daily_change_percentage).toFixed(2);
+  const coin = data.symbol.slice(0, 3);
+  const last_price = parseFloat(data.lastPrice).toFixed(2);
+  const low_price = parseFloat(data.lowPrice).toFixed(2);
+  const high_price = parseFloat(data.highPrice).toFixed(2);
+  const changePercent = parseFloat(data.priceChangePercent).toFixed(2);
+  const isNegative = +changePercent < 0;
 
   return (
     <div className="group relative mx-auto w-full">
       <div
-        className={`absolute -inset-0.5 rounded-2xl opacity-10 blur-xl transition duration-500 group-hover:opacity-20 ${
-          isNegative ? "bg-red-500" : "bg-emerald-500"
-        }`}
+        className={cn(
+          "absolute -inset-0.5 rounded-2xl opacity-10 blur-xl transition duration-500",
+          "group-hover:opacity-20",
+          `${isNegative ? "bg-red-500" : "bg-emerald-500"}`,
+        )}
       />
-
       <div className="relative rounded-2xl bg-[#171717] p-5 shadow-2xl transition-all duration-300 hover:border-zinc-800">
-        {/* Header Row: Symbol & Change Badge */}
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-baseline gap-1.5">
             <span className="font-mono text-3xl font-black tracking-tight text-zinc-100">
-              {coin.symbol}
+              {coin}
             </span>
+
             <span className="font-mono text-[10px] tracking-wider text-zinc-500 uppercase">
               / USD
             </span>
@@ -50,20 +60,9 @@ export default function CryptoCoin() {
           </span>
         </div>
 
-        {/* Spot Pricing Core */}
         <div className="mb-4">
           <div className="font-mono text-3xl font-bold tracking-tight text-white">
-            $
-            {parseFloat(coin.last).toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-            })}
-          </div>
-          <div className="mt-1 flex items-center gap-1 font-mono text-[11px] text-zinc-500">
-            <span>{parseFloat(coin.last_btc).toFixed(5)} BTC</span>
-            <span className="text-zinc-700">•</span>
-            <span className="text-[10px] text-zinc-600 capitalize">
-              {coin.source_exchange} feed
-            </span>
+            ${last_price}
           </div>
         </div>
 
@@ -81,24 +80,20 @@ export default function CryptoCoin() {
             <span className="mb-0.5 block text-[10px] tracking-wider text-zinc-600 uppercase">
               24h Low
             </span>
-            <span className="font-medium text-zinc-400">
-              ${parseFloat(coin.lowest).toFixed(2)}
-            </span>
+            <span className="font-medium text-zinc-400">${low_price}</span>
           </div>
+
           <div className="text-right">
             <span className="mb-0.5 block text-[10px] tracking-wider text-zinc-600 uppercase">
               24h High
             </span>
-            <span className="font-medium text-zinc-400">
-              ${parseFloat(coin.highest).toFixed(2)}
-            </span>
+            <span className="font-medium text-zinc-400">${high_price}</span>
           </div>
         </div>
 
-        {/* Subtle Timestamp Footer */}
         <div className="mt-4 border-t border-zinc-900/40 pt-2 text-center">
           <span className="font-mono text-[9px] text-zinc-600">
-            Synced: {coin.date}
+            Synced: Binance
           </span>
         </div>
       </div>
