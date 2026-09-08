@@ -3,6 +3,7 @@
 import useSWR from "swr";
 import { CoinInfo } from "@/types";
 import { cn } from "@/utils/utils";
+import { CryptoCoinSceleton } from "./CryptoCoinSceleton";
 
 const fetcher = (url: string): Promise<CoinInfo> =>
   fetch(url).then((r) => {
@@ -11,14 +12,19 @@ const fetcher = (url: string): Promise<CoinInfo> =>
   });
 
 export default function CryptoCoin() {
-  const { data, error, isLoading } = useSWR(`/api/ticker`, fetcher, {
+  const { data, error } = useSWR(`/api/ticker`, fetcher, {
     refreshInterval: 60_000,
     keepPreviousData: true,
   });
 
-  if (error) return <div className="text-red-500">Failed to load ticker.</div>;
-  if (isLoading) return <div>Loading real-time price</div>;
-  if (!data) return <div>No active tickers found.</div>;
+  if (error)
+    return (
+      <div className="w-full text-center text-red-500">
+        Failed to load ticker.
+      </div>
+    );
+
+  if (!data) return <CryptoCoinSceleton />;
 
   const coin = data.symbol.slice(0, 3);
   const last_price = parseFloat(data.lastPrice).toFixed(2);
@@ -36,7 +42,12 @@ export default function CryptoCoin() {
           `${isNegative ? "bg-red-500" : "bg-emerald-500"}`,
         )}
       />
-      <div className="relative rounded-2xl bg-[#171717] p-5 shadow-2xl transition-all duration-300 hover:border-zinc-800">
+      <div
+        className={cn(
+          "relative rounded-2xl bg-[#171717] p-5 shadow-2xl",
+          "transition-all duration-300 hover:border-zinc-800",
+        )}
+      >
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-baseline gap-1.5">
             <span className="font-mono text-3xl font-black tracking-tight text-zinc-100">
