@@ -16,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "./ui/chart";
+import { BTCChartSkeleton } from "./BTCChartSkeleton";
 
 const RANGES = ["1D", "1W", "1M", "3M", "1Y"] as const;
 type Range = (typeof RANGES)[number];
@@ -70,9 +71,11 @@ export function BtcChart() {
     { refreshInterval: 60_000, keepPreviousData: true },
   );
 
-  const points = data?.data ?? [];
-  const first = points[0]?.price;
-  const last = points[points.length - 1]?.price;
+  if (!data) return <BTCChartSkeleton />;
+
+  const points = data.data ?? [];
+  const first = points[0].price;
+  const last = points[points.length - 1].price;
   const change = first && last ? last - first : 0;
   const changePct = first ? (change / first) * 100 : 0;
   const isUp = change >= 0;

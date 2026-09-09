@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import CryptoCoin from "@/components/CryptoCoin";
 import { BtcChart } from "@/components/btc-chart";
+import { BTCChartSkeleton } from "@/components/BTCChartSkeleton";
 
 export default async function Dashboard() {
   const supabase = await createClient();
