@@ -1,7 +1,8 @@
 export type Post = {
   id: number;
   title: string;
-  body?: string;
+  body: string;
+  created_at?: number;
 };
 
 export type CoinInfo = {

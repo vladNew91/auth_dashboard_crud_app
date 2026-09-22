@@ -9,7 +9,7 @@ export async function createPost(formData: FormData) {
   const body = formData.get("body") as string;
 
   await supabase.from("posts").insert({ title: title, body: body });
-  revalidatePath("posts");
+  revalidatePath("/posts");
 }
 
 export async function updatePost(formData: FormData) {
@@ -21,11 +21,11 @@ export async function updatePost(formData: FormData) {
     .from("posts")
     .update({ title: title, body: body })
     .eq("id", +id);
-  revalidatePath("posts");
-  revalidatePath(`posts/${id}`);
+  revalidatePath("/posts");
+  revalidatePath(`/posts/${id}`);
 }
 
 export async function deletePost(id: number) {
   await supabase.from("posts").delete().eq("id", id);
-  revalidatePath("posts");
+  revalidatePath("/posts");
 }
