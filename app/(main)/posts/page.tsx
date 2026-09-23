@@ -1,14 +1,31 @@
+export const dynamic = "force-dynamic";
+
 import { Suspense } from "react";
 import { Post } from "@/types";
 import PostsList from "@/components/PostsList";
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import { PostsListSkeleton } from "@/components/PostsListSkeleton";
 
 export default async function PostsPage() {
-  const { data: posts } = await supabase
-    .from<"posts", Post>("posts")
-    .select("*")
+  const supabase = await createClient();
+  const { data: posts, error } = await supabase
+    .from("posts")
+    .select(
+      `
+    id,
+    title,
+    body,
+    created_at,
+    user_id,
+    profiles!left (
+      email
+    )
+  `,
+    )
     .returns<Post[]>();
+
+  if (error) console.error(error);
+
   const countPosts = posts ? posts.length : 0;
 
   return (
