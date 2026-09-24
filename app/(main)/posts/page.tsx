@@ -16,6 +16,7 @@ export default async function PostsPage() {
     title,
     body,
     created_at,
+    updated_at,
     user_id,
     profiles!left (
       email
@@ -29,7 +30,7 @@ export default async function PostsPage() {
   const countPosts = posts ? posts.length : 0;
 
   return (
-    <section className="w-md p-4 font-sans sm:p-6 lg:p-8">
+    <section className="w-xxl p-4 font-sans sm:p-6 lg:p-8">
       <h2 className="m-3 text-lg font-semibold">
         All posts: <b>{countPosts}</b>
       </h2>

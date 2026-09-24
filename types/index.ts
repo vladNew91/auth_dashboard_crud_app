@@ -3,6 +3,7 @@ export type Post = {
   title: string;
   body: string;
   created_at: number;
+  updated_at?: string | null;
   user_id: string;
   profiles?: {
     email: string;

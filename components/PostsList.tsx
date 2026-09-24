@@ -9,7 +9,7 @@ type PostsListProps = {
 
 export default async function PostsList({ posts }: PostsListProps) {
   return (
-    <ul className="mx-auto w-full max-w-2xl">
+    <ul className="mx-auto w-full max-w-3xl">
       {posts &&
         posts.map((post, i: number) => {
           const authorEmail = post.profiles?.email || "Anonymous Visitor";
@@ -21,12 +21,24 @@ export default async function PostsList({ posts }: PostsListProps) {
               })
             : "Unknown date";
 
+          // Check if an update has taken place
+          const isEdited = !!post.updated_at;
+          const formattedUpdatedDate = isEdited
+            ? new Date(post.updated_at!).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : null;
+
           return (
             <li
               key={post.id}
               className={cn(
                 "group my-3 flex items-start justify-between gap-6 rounded-2xl",
-                "border border-gray-100 p-4 shadow-sm transition-all duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800",
+                "border border-gray-100 p-4 shadow-sm transition-all duration-200",
+                "hover:shadow-md dark:border-gray-700 dark:bg-gray-800",
               )}
             >
               <Link href={`/posts/${post.id}`} className="flex-1">
@@ -38,6 +50,15 @@ export default async function PostsList({ posts }: PostsListProps) {
                     </span>
                     <span>•</span>
                     <span>{formattedDate}</span>
+
+                    {isEdited && (
+                      <>
+                        <span>•</span>
+                        <span className="rounded-md px-1.5 py-0.5 font-medium text-amber-400 dark:text-amber-700">
+                          Updated: {formattedUpdatedDate}
+                        </span>
+                      </>
+                    )}
                   </div>
 
                   {/* Title & Body */}
