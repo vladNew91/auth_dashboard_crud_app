@@ -11,7 +11,7 @@ export const CreatePostWelcome = async () => {
 
   return (
     <>
-      <h3 className="whitespace-pre-line">
+      <h3 className="text-xl whitespace-pre-line">
         {!user ? "Create post" : `Welcome, ${userName}!\nCreate post.`}
       </h3>
     </>

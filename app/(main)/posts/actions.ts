@@ -26,6 +26,8 @@ export async function createPost(formData: FormData) {
     console.error("Database Insert Error:", error.message);
     throw new Error(error.message);
   }
+
+  revalidatePath("/posts");
 }
 
 export async function updatePost(formData: FormData) {

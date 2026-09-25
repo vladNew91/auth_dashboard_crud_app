@@ -15,7 +15,7 @@ export const SubmitFormButton = ({ title }: SubmitFormButtonProps) => {
       disabled={pending}
       className="w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700"
     >
-      {!pending ? title : "Sending..."}
+      {title}
     </button>
   );
 };

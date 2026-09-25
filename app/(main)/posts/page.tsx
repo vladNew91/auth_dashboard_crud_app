@@ -30,13 +30,13 @@ export default async function PostsPage() {
   const countPosts = posts ? posts.length : 0;
 
   return (
-    <section className="w-xxl p-4 font-sans sm:p-6 lg:p-8">
+    <section className="w-full max-w-3xl p-4 font-sans sm:p-6 lg:p-8">
       <h2 className="m-3 text-lg font-semibold">
         All posts: <b>{countPosts}</b>
       </h2>
 
       {!posts || posts.length === 0 ? (
-        <div className="rounded-2xl py-16 text-center shadow-sm dark:bg-gray-800">
+        <div className="w-full max-w-3xl rounded-2xl py-16 text-center shadow-sm dark:bg-gray-800">
           <p className="text-lg font-medium text-slate-400">No posts found</p>
         </div>
       ) : (

@@ -7,8 +7,8 @@ export default async function Home() {
   return (
     <div
       className={cn(
-        "w-md rounded-xl border-gray-100",
-        "bg-white p-3 shadow-md dark:border-gray-700 dark:bg-gray-800",
+        "w-full max-w-3xl rounded-xl border-gray-100",
+        "m-3 bg-white p-4 shadow-md sm:p-6 lg:p-8 dark:border-gray-700 dark:bg-gray-800",
       )}
     >
       <form className="space-y-4" action={createPost}>
@@ -35,10 +35,10 @@ export default async function Home() {
             Content
           </label>
 
-          <input
-            type="text"
+          <textarea
             id="body"
             name="body"
+            rows={4}
             className={cn(
               "mt-1 w-full py-2 focus:ring-blue-500 dark:border-gray-700",
               "rounded-lg border px-3 focus:ring-2 dark:bg-gray-900 dark:text-white",
