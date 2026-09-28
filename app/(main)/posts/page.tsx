@@ -12,17 +12,17 @@ export default async function PostsPage() {
     .from("posts")
     .select(
       `
-    id,
-    title,
-    body,
-    created_at,
-    updated_at,
-    user_id,
-    profiles!left (
-      email
+      id,
+      title,
+      body,
+      created_at,
+      updated_at,
+      user_id,
+      profiles!left (
+        email
+      )`,
     )
-  `,
-    )
+    .order("updated_at", { ascending: false, nullsFirst: false })
     .returns<Post[]>();
 
   if (error) console.error(error);

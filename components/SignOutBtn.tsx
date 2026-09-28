@@ -1,14 +1,19 @@
 "use client";
 
+import { ReactNode } from "react";
 import { signout } from "@/app/(auth)/actions";
 
-export const SignOutBtn = () => {
+type SignOutBtnProps = {
+  children?: ReactNode;
+};
+
+export const SignOutBtn = ({ children }: SignOutBtnProps) => {
   const handleSignOut = async () => await signout();
 
   return (
     <form action={handleSignOut}>
       <button className="cursor-pointer text-base/7 text-white" type="submit">
-        Sign Out
+        {children || "Log out"}
       </button>
     </form>
   );

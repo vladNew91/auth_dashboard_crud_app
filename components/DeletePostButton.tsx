@@ -1,9 +1,9 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-
 import { deletePost } from "@/app/(main)/posts/actions";
 import { redirect } from "next/navigation";
+import { Spinner } from "./ui/spinner";
 
 type DeleteButtonProps = {
   id: number;
@@ -23,7 +23,7 @@ export const DeletePostButton = ({ id }: DeleteButtonProps) => {
       onClick={handleDelete}
       className="w-full rounded-lg bg-red-600 p-2 text-white hover:bg-red-700"
     >
-      Delete
+      {!pending ? "Delete" : <Spinner />}
     </button>
   );
 };

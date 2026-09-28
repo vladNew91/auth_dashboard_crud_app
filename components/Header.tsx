@@ -4,6 +4,7 @@ import { PopoverGroup } from "@headlessui/react";
 import { HiOutlineHome } from "react-icons/hi2";
 import { createClient } from "@/utils/supabase/server";
 import { MobileMenu } from "@/components/MobileMenu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SignOutBtn } from "./SignOutBtn";
 
 interface HeaderProps {
@@ -66,7 +67,12 @@ export const Header = async ({ appName }: HeaderProps) => {
               Sign in
             </Link>
           ) : (
-            <SignOutBtn />
+            <SignOutBtn>
+              <Avatar>
+                <AvatarImage src={user.user_metadata.avatar_url} alt="logo" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </SignOutBtn>
           )}
         </div>
       </nav>
