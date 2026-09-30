@@ -53,7 +53,10 @@ function PostItem({ post }: { post: Post }) {
       <div className="flex flex-col gap-1">
         <Link
           href={`/posts/${post.id}`}
-          className="flex-1 text-xl font-bold text-gray-900 transition-colors duration-200 hover:text-blue-600 dark:text-white"
+          className={cn(
+            "flex-1 text-xl font-bold text-gray-900 transition-colors",
+            "w-full truncate duration-200 hover:text-blue-600 dark:text-white",
+          )}
         >
           {post.title}
         </Link>
