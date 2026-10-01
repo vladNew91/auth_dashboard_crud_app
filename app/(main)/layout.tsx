@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/toast";
 import "./../globals.css";
 
 const appName = "Auth CRUD Dashboard";
@@ -34,11 +34,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col">
+        <Toaster />
         <Header appName={appName} />
         <main className="m-auto flex w-full justify-center">{children}</main>
         <Footer appName={appName} />
         <Analytics />
-        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

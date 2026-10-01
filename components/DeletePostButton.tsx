@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Spinner } from "./ui/spinner";
+import { showToast } from "./showToast";
 import { useFormStatus } from "react-dom";
 import { Trash2Icon } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -25,15 +26,22 @@ type DeleteButtonProps = {
 export const DeletePostButton = ({ id }: DeleteButtonProps) => {
   const { pending } = useFormStatus();
 
-  const handleDelete = () => {
-    deletePost(id);
+  const handleDelete = async () => {
+    const result = await deletePost(id);
+
+    if (result.success) {
+      showToast({ type: "success", description: result.message });
+    } else {
+      showToast({ type: "error", title: "Error", description: result.message });
+    }
+
     redirect("/posts");
   };
 
   const dleteBtn = (
     <button
       disabled={pending}
-      className="w-full rounded-lg bg-red-600 p-2 text-white hover:bg-red-700"
+      className="mt-2 w-full rounded-lg bg-red-600 p-2 text-white hover:bg-red-700"
     >
       {!pending ? "Delete" : <Spinner />}
     </button>

@@ -1,8 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { supabase } from "@/utils/supabase/client";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
 
 // CRUD
 export async function createPost(formData: FormData) {
@@ -22,12 +22,10 @@ export async function createPost(formData: FormData) {
     },
   ]);
 
-  if (error) {
-    console.error("Database Insert Error:", error.message);
-    throw new Error(error.message);
-  }
+  if (error) return { success: false, message: error.message };
 
   revalidatePath("/posts");
+  return { success: true, message: "Post created successfully!" };
 }
 
 export async function updatePost(formData: FormData) {
@@ -35,15 +33,25 @@ export async function updatePost(formData: FormData) {
   const title = formData.get("title") as string;
   const body = formData.get("body") as string;
 
-  await supabase
+  const { error } = await supabase
     .from("posts")
     .update({ title: title, body: body })
     .eq("id", +id);
+
+  if (error) return { success: false, message: error.message };
+
   revalidatePath("/posts");
   revalidatePath(`/posts/${id}`);
+  return { success: true, message: "Post updated successfully!" };
 }
 
 export async function deletePost(id: number) {
-  await supabase.from("posts").delete().eq("id", id);
+  const { error } = await supabase.from("posts").delete().eq("id", id);
+
+  if (error) {
+    return { success: false, message: error.message };
+  }
+
   revalidatePath("/posts");
+  return { success: true, message: "Post deleted successfully!" };
 }
