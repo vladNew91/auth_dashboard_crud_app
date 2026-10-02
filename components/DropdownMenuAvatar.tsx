@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SignOutBtn } from "./SignOutBtn";
 import { cn } from "@/utils/utils";
+import Link from "next/link";
 
 type DropdownMenuAvatarProps = {
   avatarURL?: string;
@@ -39,12 +40,14 @@ export function DropdownMenuAvatar({ avatarURL }: DropdownMenuAvatarProps) {
         }
       />
       <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem disabled>
-            <BadgeCheckIcon />
-            Account
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        <Link href="/me">
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <BadgeCheckIcon />
+              Account
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </Link>
 
         <DropdownMenuSeparator />
 

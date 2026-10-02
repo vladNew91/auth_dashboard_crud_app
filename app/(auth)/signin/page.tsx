@@ -14,7 +14,7 @@ export default async function SignInPage({
     <section className="flex min-h-screen w-full items-center justify-center">
       <div
         className={cn(
-          "w-full max-w-md rounded-2xl p-8 pb-5",
+          "m-3 w-full max-w-md rounded-2xl p-8 pb-5",
           "shadow-[0_0_20px_rgba(34,211,238,1),inset_0_0_20px_rgba(34,211,238,0.3)]",
         )}
       >
