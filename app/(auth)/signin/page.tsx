@@ -1,7 +1,9 @@
 import { cn } from "@/utils/utils";
 import Link from "next/link";
-import { login, loginWithGitHub } from "../actions";
 import { FiGithub } from "react-icons/fi";
+import { FaGoogle } from "react-icons/fa";
+import { login } from "../actions";
+import { SignInWithOAuth } from "@/components/ui/signin-oauth-form";
 
 export default async function SignInPage({
   searchParams,
@@ -90,16 +92,15 @@ export default async function SignInPage({
           </span>
         </div>
 
-        <form action={loginWithGitHub} className="flex justify-center">
-          <button
-            className="box-border cursor-pointer rounded-lg p-2 font-semibold text-white hover:bg-white/5"
-            type="submit"
-          >
-            <span title="Sign in with GitHub">
-              <FiGithub size={20} />
-            </span>
-          </button>
-        </form>
+        <div className="text-center">   
+          <SignInWithOAuth provider="github">
+            <FiGithub size={20} />
+          </SignInWithOAuth>
+
+          <SignInWithOAuth provider="google">
+            <FaGoogle size={20} />
+          </SignInWithOAuth>
+        </div>
       </div>
     </section>
   );

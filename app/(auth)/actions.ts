@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { Provider } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -68,23 +69,26 @@ export async function signout() {
   return;
 }
 
-export async function loginWithGitHub() {
+export async function signInWithOAuth(provider: Provider) {
   const supabase = await createClient();
 
-  // Request the GitHub login URL from Supabase Auth
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "github",
+    provider: provider,
     options: {
-      // Points back to your Route Handler created in the earlier step
       redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/dashboard`,
+      // Optional: inclusion of queryParams for Google's account selection screen
+      queryParams: provider === 'google' ? {
+        access_type: 'offline',
+        prompt: 'select_account',
+      } : undefined,
     },
   });
 
   if (error) {
-    return redirect("/signin?error=GitHub authentication failed");
+    const formattedProvider = provider.charAt(0).toUpperCase() + provider.slice(1);
+    return redirect(`/signin?error=${formattedProvider} authentication failed`);
   }
 
-  // Redirect the user directly to GitHub's consent screen
   if (data.url) {
     return redirect(data.url);
   }
