@@ -77,15 +77,19 @@ export async function signInWithOAuth(provider: Provider) {
     options: {
       redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?next=/dashboard`,
       // Optional: inclusion of queryParams for Google's account selection screen
-      queryParams: provider === 'google' ? {
-        access_type: 'offline',
-        prompt: 'select_account',
-      } : undefined,
+      queryParams:
+        provider === "google"
+          ? {
+              access_type: "offline",
+              prompt: "select_account",
+            }
+          : undefined,
     },
   });
 
   if (error) {
-    const formattedProvider = provider.charAt(0).toUpperCase() + provider.slice(1);
+    const formattedProvider =
+      provider.charAt(0).toUpperCase() + provider.slice(1);
     return redirect(`/signin?error=${formattedProvider} authentication failed`);
   }
 

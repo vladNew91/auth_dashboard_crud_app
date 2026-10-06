@@ -92,7 +92,7 @@ export default async function SignInPage({
           </span>
         </div>
 
-        <div className="text-center">   
+        <div className="text-center">
           <SignInWithOAuth provider="github">
             <FiGithub size={20} />
           </SignInWithOAuth>

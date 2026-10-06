@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { cn } from "@/utils/utils";
+import { cn, getHighResGoogleAvatar } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -12,9 +12,9 @@ export default async function Me() {
 
   if (!user) redirect("/signin");
 
-  const userAvatar: string = user?.user_metadata.avatar_url;
+  const highResAvatar = getHighResGoogleAvatar(user.user_metadata?.avatar_url);
   const userName =
-    user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email;
+    user.user_metadata?.full_name || user.user_metadata?.name || user.email;
 
   return (
     <section
@@ -25,7 +25,7 @@ export default async function Me() {
       )}
     >
       <Avatar className="h-50 w-50">
-        <AvatarImage src={userAvatar} alt="avatar" />
+        <AvatarImage src={highResAvatar} alt="avatar" />
         <AvatarFallback className="text-8xl">AU</AvatarFallback>
       </Avatar>
 
