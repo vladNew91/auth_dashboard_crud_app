@@ -19,7 +19,7 @@ type PostsListProps = {
   posts: Post[];
 };
 
-export default async function PostsList({ posts }: PostsListProps) {
+export default function PostsList({ posts }: PostsListProps) {
   if (!posts || posts.length === 0) return null;
 
   return (
