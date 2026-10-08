@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
 // import { Analytics } from "@vercel/analytics/next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -8,16 +8,6 @@ import "./../globals.css";
 import { BreadcrumbComponent } from "@/components/Breadcrumb";
 
 const appName = "Auth CRUD Dashboard";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: appName,
@@ -30,11 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-screen flex-col">
+    <html lang="en" className={`${GeistMono.variable} h-full antialiased`}>
+      <body className="flex h-dvh flex-col">
         <Toaster />
         <Header appName={appName} />
         <BreadcrumbComponent />

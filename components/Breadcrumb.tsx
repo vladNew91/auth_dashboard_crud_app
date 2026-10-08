@@ -13,14 +13,14 @@ import { useBreadcrumbs } from "@/utils/useBreadcrumbs";
 import { HiOutlineHome } from "react-icons/hi2";
 
 export function BreadcrumbComponent() {
-  const segments = useBreadcrumbs();
+  const [segments, length] = useBreadcrumbs();
 
-  if (!segments) return;
+  if (!length || !segments) return null;
 
   return (
     <Breadcrumb className="p-3">
       <BreadcrumbList>
-        {segments.length > 0 && (
+        {length > 0 && (
           <BreadcrumbLink
             render={
               <Link href="/">
@@ -36,9 +36,14 @@ export function BreadcrumbComponent() {
           <React.Fragment key={i}>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink
-                render={<Link href={`/${segment}`}>{segment}</Link>}
-              />
+              {/* disable last element in breadcrumbs as link */}
+              {length !== ++i ? (
+                <BreadcrumbLink
+                  render={<Link href={`/${segment}`}>{segment}</Link>}
+                />
+              ) : (
+                segment
+              )}
             </BreadcrumbItem>
           </React.Fragment>
         ))}
