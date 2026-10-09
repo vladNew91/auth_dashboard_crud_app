@@ -37,7 +37,7 @@ export default async function PostsPage() {
       </h2>
 
       {!posts || posts.length === 0 ? (
-        <div className="w-full max-w-3xl rounded-2xl py-16 text-center shadow-sm dark:bg-gray-800">
+        <div className="w-full max-w-3xl rounded-2xl bg-gray-800 py-16 text-center shadow-sm">
           <p className="text-lg font-medium text-slate-400">No posts found</p>
         </div>
       ) : (
