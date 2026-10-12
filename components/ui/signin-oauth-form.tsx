@@ -1,4 +1,5 @@
 import { signInWithOAuth } from "@/app/(auth)/actions";
+import { cn } from "@/utils/utils";
 import { Provider } from "@supabase/supabase-js";
 
 type SignInWithProviderProps = {
@@ -11,15 +12,15 @@ export function SignInWithOAuth({
   children,
 }: SignInWithProviderProps) {
   return (
-    <form
-      action={signInWithOAuth.bind(null, provider)}
-      className="inline-block"
-    >
+    <form action={signInWithOAuth.bind(null, provider)}>
       <button
-        className="box-border cursor-pointer rounded-lg p-2 font-semibold text-white hover:bg-white/5"
         type="submit"
+        className={cn(
+          "w-full cursor-pointer rounded-lg p-4 font-semibold hover:bg-white/5",
+          "flex flex-row justify-center bg-white/3 text-black dark:text-white",
+        )}
       >
-        <span title={`Sign in with ${provider}`}>{children}</span>
+        {children}
       </button>
     </form>
   );
