@@ -3,6 +3,7 @@ import { cn } from "@/utils/utils";
 import { login } from "../actions";
 import { FiGithub } from "react-icons/fi";
 import { FaGoogle } from "react-icons/fa";
+import { AuthSignForm } from "@/components/AuthSignForm";
 import { SignInWithOAuth } from "@/components/ui/signin-oauth-form";
 
 export default async function SignInPage({
@@ -19,82 +20,26 @@ export default async function SignInPage({
         "sm:shadow-[0_0_20px_rgba(34,211,238,1),inset_0_0_7px_rgba(34,211,238,0.3)]",
       )}
     >
-      <SignInWithOAuth provider="github">
-        Log In with GitHub&ensp;
-        <FiGithub size={20} />
-      </SignInWithOAuth>
-
       <SignInWithOAuth provider="google">
         Log In with Google&ensp;
         <FaGoogle size={20} />
       </SignInWithOAuth>
 
+      <SignInWithOAuth provider="github">
+        Log In with GitHub&ensp;
+        <FiGithub size={20} />
+      </SignInWithOAuth>
+
       <h2 className="text-center text-xl">Sign In</h2>
 
-      <form action={login} className="flex flex-col gap-3">
-        <label
-          htmlFor="email"
-          className="font-medium text-zinc-700 dark:text-zinc-300"
-        >
-          Email
-        </label>
+      <AuthSignForm action={login} params={params} />
 
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="name@company.com"
-          className={cn(
-            "text-m w-full rounded-lg p-3 text-zinc-900",
-            "dark:bg-zinc-900 dark:text-zinc-100",
-          )}
-        />
-
-        <label
-          htmlFor="password"
-          className="font-medium text-zinc-700 dark:text-zinc-300"
-        >
-          Password
-        </label>
-
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          placeholder="••••••••••••••••"
-          className={cn(
-            "text-m w-full rounded-lg p-3 text-zinc-900",
-            "dark:bg-zinc-900 dark:text-zinc-100",
-          )}
-        />
-
-        {params.error && <p className="text-sm text-red-500">{params.error}</p>}
-        {params.message && (
-          <p className="text-sm text-green-500">{params.message}</p>
-        )}
-
-        <button
-          type="submit"
-          className={cn(
-            "text-m w-full cursor-pointer rounded-lg bg-zinc-900 py-2",
-            "font-medium text-white transition-colors hover:bg-zinc-800",
-            "focus:bg-blue-400 focus:outline-none dark:bg-zinc-50",
-            "dark:text-zinc-900 dark:hover:bg-zinc-200",
-          )}
-        >
-          Sign in
-        </button>
-
-        <div className="text-center text-xs dark:text-zinc-300">
-          <span>Don&apos;t have an Account?&ensp;</span>
-          <Link href={"/signup"} className="text-blue-300">
-            Sign up
-          </Link>
-        </div>
-      </form>
+      <div className="text-center text-xs dark:text-zinc-300">
+        <span>Don&apos;t have an Account?&ensp;</span>
+        <Link href={"/signup"} className="text-blue-300">
+          Sign up
+        </Link>
+      </div>
     </section>
   );
 }

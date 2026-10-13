@@ -49,7 +49,7 @@ export async function signup(formData: FormData) {
   ) {
     return redirect(
       `/signup?error=${encodeURIComponent(
-        "An account with this email already exists. Please log in using your original provider (e.g., GitHub).",
+        "An account with this email already exists. Please log in using your original provider (e.g., Google).",
       )}`,
     );
   }
