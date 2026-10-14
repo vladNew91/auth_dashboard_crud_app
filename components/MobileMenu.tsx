@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/utils/utils";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { SignOutBtn } from "./SignOutBtn";
 import { User } from "@supabase/supabase-js";
+import { Dialog, DialogPanel } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface MobileMenuProps {
   appName?: string;
@@ -102,13 +102,23 @@ export const MobileMenu = ({ appName, user }: MobileMenuProps) => {
                   </Link>
 
                   {user && (
-                    <Link
-                      href="/dashboard"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
-                      onClick={toggleMobileMenu}
-                    >
-                      Dashboard
-                    </Link>
+                    <>
+                      <Link
+                        href="/dashboard"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
+                        onClick={toggleMobileMenu}
+                      >
+                        Dashboard
+                      </Link>
+
+                      <Link
+                        href="/profile"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
+                        onClick={toggleMobileMenu}
+                      >
+                        Profile
+                      </Link>
+                    </>
                   )}
                 </div>
 

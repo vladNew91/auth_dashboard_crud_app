@@ -40,11 +40,11 @@ export function DropdownMenuAvatar({ avatarURL }: DropdownMenuAvatarProps) {
         }
       />
       <DropdownMenuContent align="end">
-        <Link href="/me">
+        <Link href="/profile">
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <BadgeCheckIcon />
-              Account
+              Profile
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </Link>

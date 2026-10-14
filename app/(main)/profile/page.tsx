@@ -3,7 +3,7 @@ import { cn, getHighResGoogleAvatar } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default async function Me() {
+export default async function Profile() {
   const supabase = await createClient();
 
   const {
