@@ -19,3 +19,30 @@ export type CoinInfo = {
   priceChangePercent: string;
   volume: string;
 };
+
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  discountPercentage: 7.17;
+  rating: number;
+  stock: number;
+  brand: string;
+  weight: number;
+  reviews: [
+    {
+      rating: number;
+      comment: string;
+      date: string;
+      reviewerName: string;
+      reviewerEmail: string;
+    },
+  ];
+  meta: {
+    createdAt: string;
+  };
+  thumbnail: unknown;
+  images: string[];
+};
