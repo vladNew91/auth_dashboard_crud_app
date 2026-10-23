@@ -52,6 +52,10 @@ export const Header = async ({ appName }: HeaderProps) => {
             Posts
           </Link>
 
+          <Link href="/products" className="font-semibold text-white">
+            Products
+          </Link>
+
           {user && (
             <Link href="/dashboard" className="font-semibold text-white">
               Dashboard
