@@ -14,6 +14,12 @@ interface MobileMenuProps {
   user: User | null;
 }
 
+const mobileMenuLinks = {
+  Home: "/",
+  Posts: "/posts",
+  Products: "/products",
+};
+
 export const MobileMenu = ({ appName, user }: MobileMenuProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
@@ -55,6 +61,7 @@ export const MobileMenu = ({ appName, user }: MobileMenuProps) => {
               "ring-1 ring-white/10 transition duration-200 ease-out",
             )}
           >
+            {/* LOGO */}
             <div className="flex items-center justify-between">
               <Link
                 href="/"
@@ -62,6 +69,7 @@ export const MobileMenu = ({ appName, user }: MobileMenuProps) => {
                 onClick={toggleMobileMenu}
               >
                 <span className="sr-only">{appName}</span>
+
                 <Image
                   className="dark:invert"
                   src="/next.svg"
@@ -82,25 +90,22 @@ export const MobileMenu = ({ appName, user }: MobileMenuProps) => {
               </button>
             </div>
 
+            {/* OTHER LINKS */}
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-white/10">
                 <div className="space-y-2 py-4">
-                  <Link
-                    href="/"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
-                    onClick={toggleMobileMenu}
-                  >
-                    Home
-                  </Link>
+                  {Object.entries(mobileMenuLinks).map(([key, value], i) => (
+                    <Link
+                      key={i}
+                      href={value}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
+                      onClick={toggleMobileMenu}
+                    >
+                      {key}
+                    </Link>
+                  ))}
 
-                  <Link
-                    href="/posts"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
-                    onClick={toggleMobileMenu}
-                  >
-                    Posts
-                  </Link>
-
+                  {/* FOR AUTH USERS */}
                   {user && (
                     <>
                       <Link
@@ -122,6 +127,7 @@ export const MobileMenu = ({ appName, user }: MobileMenuProps) => {
                   )}
                 </div>
 
+                {/* SIGN IN/OUT LINK */}
                 <div className="py-6">
                   {!user ? (
                     <Link href="/signin" className="text-base/7 text-white">
