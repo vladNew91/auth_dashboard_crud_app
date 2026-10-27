@@ -17,14 +17,14 @@ export const Header = async ({ appName }: HeaderProps) => {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="bg-gray-900">
+    <header className="bg-gray-900 px-5 py-4 border-b border-gray-800">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
+        className="mx-auto flex items-center justify-between"
       >
         {/* Logo Section */}
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+          <Link href="/">
             <span className="sr-only">{appName}</span>
             <Image
               className="dark:invert"

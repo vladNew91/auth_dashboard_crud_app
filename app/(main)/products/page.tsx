@@ -4,8 +4,6 @@ import { getAllProducts } from "./actions";
 export default async function Products() {
   const { products } = await getAllProducts();
 
-  console.log(products);
-
   if (!products) return null;
 
   return (

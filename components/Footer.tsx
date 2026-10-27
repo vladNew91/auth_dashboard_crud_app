@@ -1,3 +1,4 @@
+import { cn } from "@/utils/utils";
 import Link from "next/link";
 
 interface FooterProps {
@@ -8,13 +9,18 @@ export const Footer = ({ appName }: FooterProps) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto w-full border-t border-gray-800 bg-gray-900 py-6 text-gray-300">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
+    <footer
+      className={cn(
+      "w-full border-t border-gray-800 bg-gray-900 text-gray-300",
+      "flex px-5 py-4 flex-col sm:flex-row justify-between text-center"
+
+      )}
+    >
         <p className="text-sm">
-          &copy; {currentYear} {appName}. All rights reserved.
+          {appName}. &copy; {currentYear}. All rights reserved.
         </p>
 
-        <div className="flex gap-6 text-sm">
+        <div className="text-xs space-x-5">
           <Link
             href="/#"
             prefetch={false}
@@ -39,7 +45,6 @@ export const Footer = ({ appName }: FooterProps) => {
             Contact
           </Link>
         </div>
-      </div>
     </footer>
   );
 };
