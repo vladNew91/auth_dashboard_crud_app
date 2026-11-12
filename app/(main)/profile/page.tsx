@@ -47,7 +47,7 @@ export default async function Profile() {
           name="name"
           type="name"
           maxLength={40}
-          placeholder={userName}
+          defaultValue={userName}
           className={cn(
             "text-m w-full rounded-lg p-3 text-zinc-900",
             "dark:bg-zinc-900 dark:text-zinc-100",

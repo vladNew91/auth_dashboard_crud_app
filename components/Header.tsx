@@ -17,7 +17,7 @@ export const Header = async ({ appName }: HeaderProps) => {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="bg-gray-900 px-5 py-4 border-b border-gray-800">
+    <header className="border-b border-gray-800 bg-gray-900 px-5 py-4">
       <nav
         aria-label="Global"
         className="mx-auto flex items-center justify-between"
