@@ -17,7 +17,7 @@ interface MobileMenuProps {
 const mobileMenuLinks = {
   Home: "/",
   Posts: "/posts",
-  Products: "/products",
+  Products: "/products?page=1",
 };
 
 export const MobileMenu = ({ appName, user }: MobileMenuProps) => {

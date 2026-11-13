@@ -52,7 +52,7 @@ export const Header = async ({ appName }: HeaderProps) => {
             Posts
           </Link>
 
-          <Link href="/products" className="font-semibold text-white">
+          <Link href="/products?page=1" className="font-semibold text-white">
             Products
           </Link>
 

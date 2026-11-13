@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Pagination,
   PaginationContent,
@@ -7,33 +9,41 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { usePathname, useSearchParams } from "next/navigation";
 
-interface ProductsPaginationProps {
-  totalProducts: number;
-}
-
-export async function ProductsPagination({
+export function ProductsPagination({
   totalProducts = 0,
-}: ProductsPaginationProps) {
-  if (!totalProducts) return null;
-
-  const firstPage = 1;
-  // eslint-disable-next-line prefer-const
-  let currentPage = 2;
+}: {
+  totalProducts: number;
+}) {
+  const one = 1;
   const productsPerPage = 12;
-  const lastPage = Math.floor(totalProducts / productsPerPage);
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page") || one);
+
+  const createPageURL = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
+
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+  if (!totalProducts) return null;
 
   return (
     <Pagination className="my-3">
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href="#" />
-        </PaginationItem>
-
-        <PaginationItem>
-          <PaginationLink isActive={currentPage === firstPage}>
-            1
-          </PaginationLink>
+          <PaginationPrevious
+            href={
+              currentPage > one
+                ? `${createPageURL(currentPage - one)}`
+                : undefined
+            }
+          />
         </PaginationItem>
 
         <PaginationItem>
@@ -49,13 +59,13 @@ export async function ProductsPagination({
         </PaginationItem>
 
         <PaginationItem>
-          <PaginationLink isActive={currentPage === lastPage}>
-            {lastPage}
-          </PaginationLink>
-        </PaginationItem>
-
-        <PaginationItem>
-          <PaginationNext href="#" />
+          <PaginationNext
+            href={
+              totalPages > one
+                ? `${createPageURL(currentPage + one)}`
+                : undefined
+            }
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

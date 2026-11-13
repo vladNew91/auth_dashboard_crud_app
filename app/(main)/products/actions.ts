@@ -16,7 +16,7 @@ const zero = 0;
 const firstPage = 1;
 const peoductsPerPage = 12;
 
-export const getPaginatedProducts = cache(async (page = 2) => {
+export const getPaginatedProducts = cache(async (page = 1) => {
   // if first page, skeep 0 products, else skip peoductsPerPage products
   const skipNumber = page === firstPage ? zero : peoductsPerPage * page;
 
