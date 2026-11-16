@@ -8,6 +8,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = product.discountPercentage > 1;
+  const discountPersent = Math.round(product.discountPercentage);
   const finalPrice = hasDiscount
     ? product.price * (1 - product.discountPercentage / 100)
     : product.price;
@@ -25,19 +26,19 @@ export function ProductCard({ product }: ProductCardProps) {
         {hasDiscount && (
           <span
             className={cn(
-              "bg-destructive text-destructive-foreground items-start font-bold",
-              "rounded-md px-1.5 py-0.5",
+              "bg-destructive text-destructive-foreground text-lg font-bold",
+              "rounded-md px-3 py-1",
             )}
           >
-            -{product.discountPercentage}%
+            &ndash;&thinsp;{discountPersent}%
           </span>
         )}
 
         {product.brand && (
           <span
             className={cn(
-              "bg-background/80 text-[10px] font-semibold backdrop-blur-xs",
-              "rounded-md px-2 py-0.5 tracking-wider uppercase",
+              "bg-background/80 text-sm font-semibold backdrop-blur-xs",
+              "rounded-md p-2 tracking-wider uppercase",
               "text-muted-foreground shadow-xs",
             )}
           >
@@ -73,7 +74,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <div
         className={cn(
           "from-background/90 via-background/60 z-10 bg-gradient-to-t",
-          "-mb-3 to-transparent pt-6 pb-3",
+          "-mx-3 -mb-3 to-transparent px-3 pt-6 pb-3",
         )}
       >
         <h3 className="text-foreground truncate text-sm font-semibold">
@@ -82,11 +83,11 @@ export function ProductCard({ product }: ProductCardProps) {
 
         <div className="mt-1 flex items-baseline justify-between">
           <div className="flex items-baseline gap-1">
-            <span className="text-foreground text-sm font-bold">
+            <span className="text-foreground text-xl font-bold">
               ${finalPrice.toFixed(2)}
             </span>
             {hasDiscount && (
-              <span className="text-muted-foreground text-[10px] line-through">
+              <span className="text-muted-foreground text-sm line-through">
                 ${product.price.toFixed(2)}
               </span>
             )}

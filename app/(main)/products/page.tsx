@@ -1,5 +1,5 @@
 import { getPaginatedProducts, getAllProducts } from "./actions";
-import { ProductsPagination } from "@/components/ProductsPagination";
+import { PagePagination } from "@/components/PagePagination";
 import { ProductsList } from "@/components/ProductsList";
 
 export default async function Products({
@@ -8,9 +8,8 @@ export default async function Products({
   searchParams: Promise<{ page?: string }>;
 }) {
   const params = await searchParams;
-  const currentPage: number = (params.page && +params.page) || 1;
-
-  console.log(currentPage);
+  const firstPage = 1;
+  const currentPage: number = (params.page && +params.page) || firstPage;
 
   const { products } = await getPaginatedProducts(currentPage);
   const { total } = await getAllProducts();
@@ -18,7 +17,7 @@ export default async function Products({
   return (
     <div className="w-full">
       <ProductsList products={products} />
-      <ProductsPagination totalProducts={total} />
+      <PagePagination totalElements={total} />
     </div>
   );
 }
