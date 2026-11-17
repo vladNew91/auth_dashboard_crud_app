@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Product } from "@/types";
 import { cn } from "@/utils/utils";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
@@ -14,12 +15,12 @@ export function ProductCard({ product }: ProductCardProps) {
     : product.price;
 
   return (
-    <div
+    <Link
       className={cn(
         "bg-muted/50 relative aspect-square overflow-hidden rounded-xl",
         "group flex flex-col justify-between p-3 transition-colors",
-        "cursor-pointer",
       )}
+      href={`/products/${product.id}`}
     >
       {/* Top Bar: Brand & Discount Tag */}
       <div className="z-10 flex w-full justify-between">
@@ -98,6 +99,6 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
