@@ -29,13 +29,13 @@ export default function ProductGallery({
   return (
     <div className="flex flex-col gap-4">
       {/* Main Image */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
+      <div className="relative aspect-square w-full overflow-hidden rounded-2xl">
         <Image
           src={selectedImage}
           alt={title}
           sizes="h-full w-full"
           fill
-          className="object-contain p-6 transition-transform duration-300 hover:scale-105"
+          className="bg-muted/50 object-contain p-6 transition-transform duration-300 hover:scale-110"
         />
       </div>
 
@@ -49,8 +49,8 @@ export default function ProductGallery({
               onClick={() => setSelectedImage(img)}
               className={`relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 bg-gray-50 transition ${
                 selectedImage === img
-                  ? "border-black ring-2 ring-black/10"
-                  : "border-transparent opacity-70 hover:opacity-100"
+                  ? "border-transparent opacity-70 hover:opacity-100"
+                  : "border-black ring-2 ring-black/10"
               }`}
             >
               <Image
@@ -58,7 +58,7 @@ export default function ProductGallery({
                 alt={`${title} view ${idx + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain p-1"
+                className="bg-muted/50 object-contain p-1"
               />
             </button>
           ))}

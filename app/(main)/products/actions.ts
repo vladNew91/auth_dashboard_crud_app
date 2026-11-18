@@ -30,3 +30,12 @@ export const getPaginatedProducts = cache(async (page = 1) => {
   if (!res.ok) throw new Error("Failed to fetch");
   return res.json() as Promise<{ products: Product[] }>;
 });
+
+export const getProduct = async (id: string): Promise<Product | null> => {
+  const res = await fetch(`https://dummyjson.com/products/${id}`, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) return null;
+  return res.json();
+};

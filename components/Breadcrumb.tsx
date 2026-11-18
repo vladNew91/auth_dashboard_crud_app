@@ -18,7 +18,7 @@ export function BreadcrumbComponent() {
   if (!length || !segments) return null;
 
   return (
-    <Breadcrumb className="mx-5 mt-3">
+    <Breadcrumb>
       <BreadcrumbList>
         {length > 0 && (
           <BreadcrumbLink

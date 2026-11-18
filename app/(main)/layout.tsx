@@ -5,7 +5,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toast";
 import "./../globals.css";
-import { BreadcrumbComponent } from "@/components/Breadcrumb";
 
 const appName = "Auth CRUD Dashboard";
 
@@ -24,7 +23,6 @@ export default function RootLayout({
       <body className="flex h-dvh flex-col">
         <Toaster />
         <Header appName={appName} />
-        <BreadcrumbComponent />
         <main className="m-auto flex w-full justify-center">{children}</main>
         <Footer appName={appName} />
         {/* <Analytics /> */}

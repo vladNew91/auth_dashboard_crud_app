@@ -1,9 +1,9 @@
 import { Post } from "@/types";
-import { cn } from "@/utils/utils";
 import ErrorPage from "@/app/error";
 import notFound from "@/app/not-found";
 import { supabase } from "@/utils/supabase/client";
 import { EditPostForm } from "@/components/PostForms";
+import { BreadcrumbComponent } from "@/components/Breadcrumb";
 
 type PostPageProps = {
   params: Promise<{ id: number }>;
@@ -21,14 +21,13 @@ export default async function PostPage({ params }: PostPageProps) {
   if (error) return ErrorPage(error);
 
   return (
-    <section
-      className={cn(
-        "mx-3 w-full max-w-3xl space-y-2 rounded-xl bg-gray-800 p-4",
-        "sm:p-6 lg:p-8",
-      )}
-    >
-      <h3 className="text-xl">Edit post</h3>
-      <EditPostForm id={id} post={post} />
-    </section>
+    <article className="m-3 w-full max-w-3xl space-y-2">
+      <BreadcrumbComponent />
+
+      <section className="rounded-xl p-4 sm:p-6 lg:p-8 dark:bg-gray-800">
+        <h3 className="text-xl">Edit post</h3>
+        <EditPostForm id={id} post={post} />
+      </section>
+    </article>
   );
 }

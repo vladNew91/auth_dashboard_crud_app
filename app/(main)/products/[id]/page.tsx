@@ -1,44 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ProductGallery";
+import { getProduct } from "../actions";
 
-// Note: Changed discountPercentage to `number` and reviews to an array `[]`
-// so dynamic API responses type-check cleanly.
-export type Product = {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand?: string;
-  weight: number;
-  reviews: {
-    rating: number;
-    comment: string;
-    date: string;
-    reviewerName: string;
-    reviewerEmail: string;
-  }[];
-  meta: {
-    createdAt: string;
-  };
-  thumbnail: unknown;
-  images: string[];
-};
-
-async function getProduct(id: string): Promise<Product | null> {
-  const res = await fetch(`https://dummyjson.com/products/${id}`, {
-    next: { revalidate: 60 },
-  });
-
-  if (!res.ok) return null;
-  return res.json();
-}
-
-export default async function ProductDetailPage({
+export default async function ProductPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -57,12 +22,17 @@ export default async function ProductDetailPage({
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       {/* Breadcrumb */}
       <nav className="mb-6 flex items-center gap-2 text-sm">
-        <Link href="/products" className="hover:text-gray-300">
+        <Link
+          href="/products?page=1"
+          className="text-gray-400 hover:text-gray-600"
+        >
           Products
         </Link>
         <span>/</span>
-        <span className="capitalize">{product.category}</span>
-        <span>/</span>
+        {/* <Link href="/#" className="hover:text-gray-300">
+          {product.category}
+        </Link>
+        <span>/</span> */}
         <span className="truncate font-medium">{product.title}</span>
       </nav>
 

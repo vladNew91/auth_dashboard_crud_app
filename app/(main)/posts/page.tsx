@@ -5,6 +5,7 @@ import { Post } from "@/types";
 import PostsList from "@/components/PostsList";
 import { createClient } from "@/utils/supabase/server";
 import { PostsListSkeleton } from "@/components/PostsListSkeleton";
+import { BreadcrumbComponent } from "@/components/Breadcrumb";
 
 export default async function PostsPage() {
   const supabase = await createClient();
@@ -32,7 +33,9 @@ export default async function PostsPage() {
 
   return (
     <section className="w-full max-w-3xl p-4 font-sans sm:p-6 lg:p-8">
-      <h2 className="m-3 text-lg font-semibold">
+      <BreadcrumbComponent />
+
+      <h2 className="my-3 text-lg font-semibold">
         All posts: <b>{countPosts}</b>
       </h2>
 
