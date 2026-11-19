@@ -2,14 +2,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ProductGallery";
 import { getProduct } from "../actions";
+import { cn } from "@/utils/utils";
 
 export default async function ProductPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
-  const product = await getProduct(id);
+  const { slug } = await params;
+  const productID = slug.split("-").pop() || "";
+  const product = await getProduct(productID);
 
   if (!product) {
     notFound();
@@ -49,7 +51,12 @@ export default async function ProductPage({
         <div className="flex flex-col">
           {/* Category & Brand */}
           <div className="flex items-center gap-3 text-sm">
-            <span className="rounded-full bg-gray-100 px-3 py-1 font-medium text-gray-800 capitalize">
+            <span
+              className={cn(
+                "rounded-full bg-gray-100 px-3 py-1 font-medium",
+                "text-gray-800 capitalize",
+              )}
+            >
               {product.category}
             </span>
 
@@ -89,13 +96,20 @@ export default async function ProductPage({
             <span className="text-3xl font-bold">
               ${discountedPrice.toFixed(2)}
             </span>
+
             {product.discountPercentage > 0 && (
               <>
                 <span className="text-lg text-gray-400 line-through">
                   ${product.price.toFixed(2)}
                 </span>
-                <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-sm font-semibold text-emerald-700">
-                  -{product.discountPercentage}% OFF
+
+                <span
+                  className={cn(
+                    "bg-destructive text-destructive-foreground text-lg font-bold",
+                    "rounded-md px-3 py-1",
+                  )}
+                >
+                  &ndash;&thinsp;{product.discountPercentage}%
                 </span>
               </>
             )}
@@ -111,14 +125,20 @@ export default async function ProductPage({
             <button
               type="button"
               disabled={product.stock === 0}
-              className="flex-1 rounded-xl bg-blue-800 px-6 py-3.5 font-semibold text-white transition hover:bg-blue-900"
+              className={cn(
+                "flex-1 rounded-xl bg-blue-800 px-6 py-3.5 font-semibold text-white",
+                "transition hover:bg-blue-900",
+              )}
             >
               Add to Cart
             </button>
 
             <button
               type="button"
-              className="rounded-xl bg-blue-100 px-6 py-3.5 font-semibold text-gray-900 transition hover:bg-green-300"
+              className={cn(
+                "rounded-xl bg-blue-100 px-6 py-3.5 font-semibold text-gray-900",
+                "transition hover:bg-green-300",
+              )}
             >
               Save to Wishlist
             </button>
@@ -159,7 +179,10 @@ export default async function ProductPage({
             {product.reviews.map((review, index) => (
               <div
                 key={index}
-                className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
+                className={cn(
+                  "flex flex-col justify-between rounded-2xl border border-gray-200",
+                  "bg-white p-5 shadow-sm",
+                )}
               >
                 <div>
                   <div className="flex items-center justify-between">

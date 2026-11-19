@@ -15,15 +15,17 @@ export default function ProductGallery({
   title,
 }: ProductGalleryProps) {
   // Safely combine thumbnail (if string) and images array without duplicates
+  // or return placeholder .png
   const allImages = Array.from(
     new Set([
       ...(typeof thumbnail === "string" && thumbnail ? [thumbnail] : []),
       ...(images || []),
     ]),
-  );
+  ) || ["/file.svg"];
 
   const [selectedImage, setSelectedImage] = useState<string>(
-    allImages[0] || "/placeholder.png",
+    // select second image with better quality or first
+    allImages[1] || allImages[0],
   );
 
   return (

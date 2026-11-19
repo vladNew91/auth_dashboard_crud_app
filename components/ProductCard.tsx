@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
         "bg-muted/50 relative aspect-square overflow-hidden rounded-xl",
         "group flex flex-col justify-between p-3 transition-colors",
       )}
-      href={`/products/${product.id}`}
+      href={`/products/${encodeURIComponent(product.title)}-${product.id}`}
     >
       {/* Top Bar: Brand & Discount Tag */}
       <div className="z-10 flex w-full justify-between">
