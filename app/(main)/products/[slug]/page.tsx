@@ -126,7 +126,7 @@ export default async function ProductPage({
               type="button"
               disabled={product.stock === 0}
               className={cn(
-                "flex-1 rounded-xl bg-blue-800 px-6 py-3.5 font-semibold text-white",
+                "flex-1 rounded-xl bg-blue-800 px-6 py-3.5 font-semibold",
                 "transition hover:bg-blue-900",
               )}
             >
@@ -136,8 +136,8 @@ export default async function ProductPage({
             <button
               type="button"
               className={cn(
-                "rounded-xl bg-blue-100 px-6 py-3.5 font-semibold text-gray-900",
-                "transition hover:bg-green-300",
+                "rounded-xl bg-green-700 px-6 py-3.5 font-semibold",
+                "transition hover:bg-green-900",
               )}
             >
               Save to Wishlist
@@ -145,18 +145,20 @@ export default async function ProductPage({
           </div>
 
           {/* Technical Metadata */}
-          <dl className="mt-8 grid grid-cols-2 gap-4 rounded-xl bg-gray-200 p-4 text-sm">
+          <dl className="bg-muted/50 mt-8 grid grid-cols-2 gap-4 rounded-xl p-4 text-sm text-gray-300">
             <div>
-              <dt className="text-gray-500">Product ID</dt>
-              <dd className="font-medium text-gray-900">#{product.id}</dd>
+              <dt>Product ID</dt>
+              <dd>#{product.id}</dd>
             </div>
+
             <div>
-              <dt className="text-gray-500">Weight</dt>
-              <dd className="font-medium text-gray-900">{product.weight} g</dd>
+              <dt>Weight</dt>
+              <dd>{product.weight} g</dd>
             </div>
-            <div className="col-span-2">
-              <dt className="text-gray-500">Listed On</dt>
-              <dd className="font-medium text-gray-900">
+
+            <div>
+              <dt>Listed On</dt>
+              <dd>
                 {new Date(product.meta.createdAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -169,7 +171,7 @@ export default async function ProductPage({
       </div>
 
       {/* Customer Reviews Section */}
-      <section className="mt-16 border-t border-gray-200 pt-10">
+      <section className="mt-8 border-t border-gray-200 pt-8">
         <h2 className="text-xl font-bold text-gray-100">
           Customer Reviews ({product.reviews?.length || 0})
         </h2>
@@ -180,8 +182,8 @@ export default async function ProductPage({
               <div
                 key={index}
                 className={cn(
-                  "flex flex-col justify-between rounded-2xl border border-gray-200",
-                  "bg-white p-5 shadow-sm",
+                  "flex flex-col justify-between rounded-2xl",
+                  "bg-muted/50 p-5 shadow-sm",
                 )}
               >
                 <div>
@@ -192,19 +194,22 @@ export default async function ProductPage({
                         {"★".repeat(5 - review.rating)}
                       </span>
                     </div>
+
                     <span className="text-xs text-gray-400">
                       {new Date(review.date).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="mt-3 text-sm text-gray-700">
+
+                  <p className="mt-3 text-sm text-gray-300">
                     &quot;{review.comment}&quot;
                   </p>
                 </div>
 
                 <div className="mt-4 border-t border-gray-100 pt-3">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-400">
                     {review.reviewerName}
                   </p>
+
                   <p className="text-xs text-gray-400">
                     {review.reviewerEmail}
                   </p>

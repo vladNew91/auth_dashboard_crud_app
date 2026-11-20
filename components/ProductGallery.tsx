@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/utils/utils";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -25,7 +26,7 @@ export default function ProductGallery({
 
   const [selectedImage, setSelectedImage] = useState<string>(
     // select second image with better quality or first
-    allImages[1] || allImages[0],
+    allImages[1 || 0],
   );
 
   return (
@@ -37,6 +38,7 @@ export default function ProductGallery({
           alt={title}
           sizes="h-full w-full"
           fill
+          loading="eager"
           className="bg-muted/50 object-contain p-6 transition-transform duration-300 hover:scale-110"
         />
       </div>
@@ -49,18 +51,19 @@ export default function ProductGallery({
               key={idx}
               type="button"
               onClick={() => setSelectedImage(img)}
-              className={`relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 bg-gray-50 transition ${
-                selectedImage === img
-                  ? "border-transparent opacity-70 hover:opacity-100"
-                  : "border-black ring-2 ring-black/10"
-              }`}
+              className={cn(
+                "relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg",
+                `bg-muted/80 border-2 transition ${
+                  selectedImage === img ? "bg-muted/100" : "border-black"
+                }`,
+              )}
             >
               <Image
                 src={img}
                 alt={`${title} view ${idx + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="bg-muted/50 object-contain p-1"
+                className="object-contain p-1"
               />
             </button>
           ))}
