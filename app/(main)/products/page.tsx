@@ -1,6 +1,8 @@
+import { FilterElements } from "@/components/FilterElements";
 import { getPaginatedProducts, getAllProducts } from "./actions";
 import { PagePagination } from "@/components/PagePagination";
 import { ProductsList } from "@/components/ProductsList";
+import { SearchElements } from "@/components/SearchElements";
 
 export default async function Products({
   searchParams,
@@ -16,6 +18,11 @@ export default async function Products({
 
   return (
     <div className="w-full">
+      <div className="flex flex-wrap">
+        <SearchElements />
+        <FilterElements />
+      </div>
+
       <ProductsList products={products} />
       <PagePagination totalElements={total} />
     </div>
