@@ -1,5 +1,5 @@
+import { getProducts } from "./actions";
 import { FilterElements } from "@/components/FilterElements";
-import { getPaginatedProducts, getAllProducts } from "./actions";
 import { PagePagination } from "@/components/PagePagination";
 import { ProductsList } from "@/components/ProductsList";
 import { SearchElements } from "@/components/SearchElements";
@@ -7,14 +7,15 @@ import { SearchElements } from "@/components/SearchElements";
 export default async function Products({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; q?: string }>;
 }) {
   const params = await searchParams;
   const firstPage = 1;
   const currentPage: number = (params.page && +params.page) || firstPage;
-
-  const { products } = await getPaginatedProducts(currentPage);
-  const { total } = await getAllProducts();
+  const { total, products } = await getProducts({
+    page: currentPage,
+    query: params.q,
+  });
 
   return (
     <div className="w-full">

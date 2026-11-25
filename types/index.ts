@@ -46,3 +46,10 @@ export type Product = {
   thumbnail: unknown;
   images: string[];
 };
+
+export interface ProductsData {
+  limit: number;
+  skip: number;
+  total: number;
+  products: Product[];
+}

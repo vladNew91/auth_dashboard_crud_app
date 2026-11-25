@@ -6,7 +6,8 @@ interface ProductsListProps {
 }
 
 export function ProductsList({ products }: ProductsListProps) {
-  if (!products) return <div className="text-center">No Products</div>;
+  if (!products.length)
+    return <div className="p-5 text-center">No Products</div>;
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
