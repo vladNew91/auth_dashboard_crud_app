@@ -7,7 +7,7 @@ import { SearchElements } from "@/components/SearchElements";
 export default async function Products({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; q?: string; sortBy?: string }>;
 }) {
   const params = await searchParams;
   const firstPage = 1;
@@ -15,6 +15,7 @@ export default async function Products({
   const { total, products } = await getProducts({
     page: currentPage,
     query: params.q,
+    sortBy: params.sortBy,
   });
 
   return (

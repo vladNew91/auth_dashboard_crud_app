@@ -5,7 +5,7 @@ const URL = "https://dummyjson.com/products";
 
 const zero = 0;
 const firstPage = 1;
-const peoductsPerPage = 12;
+const productsPerPage = 12;
 
 export const getProduct = async (id: string): Promise<Product | null> => {
   const res = await fetch(`https://dummyjson.com/products/${id}`, {
@@ -16,27 +16,28 @@ export const getProduct = async (id: string): Promise<Product | null> => {
   return res.json();
 };
 
-type getProductsProps = {
-  page?: number;
-  query?: string;
-};
-
 export const getProducts = cache(
-  async ({ page = 1, query = "" }: getProductsProps) => {
-    // if first page, skip 0 products, else skip products peoductsPerPage
-    const skipNumber = page === firstPage ? zero : peoductsPerPage * page;
+  async ({
+    page = 1,
+    query = "",
+    sortBy = "",
+  }: {
+    page?: number;
+    query?: string;
+    sortBy?: string;
+  }) => {
+    // if first page, skip 0 products, else skip products productsPerPage
+    const skipNumber = page === firstPage ? zero : productsPerPage * page;
 
     const res = await fetch(
-      // join fetch url for search product and pagination
-      query
-        ? `${URL}/search?q=${query}&skip=${skipNumber}&limit=${peoductsPerPage}`
-        : `${URL}?skip=${skipNumber}&limit=${peoductsPerPage}`,
+      `${URL}/search?q=${query}&skip=${skipNumber}` +
+        `&limit=${productsPerPage}&sortBy=${sortBy}&order=asc`,
       {
         next: { revalidate: 120 },
       },
     );
 
-    if (!res.ok) throw new Error("Failed to fetch");
+    if (!res.ok) return null;
     return res.json();
   },
 );

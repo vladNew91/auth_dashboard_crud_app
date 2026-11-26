@@ -11,36 +11,45 @@ export function SearchElements() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [query, setQuery] = React.useState(searchParams.get("q") || "");
+  const currentQuery = searchParams.get("q") || "";
 
-  const handleChangeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
+  const handleSubmit = React.useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const trimmedQuery = (formData.get("q") as string).trim();
 
-  const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString());
+      // Read live URL params inside the event handler to avoid hook dependencies
+      const params = new URLSearchParams(window.location.search);
+      if (trimmedQuery === (params.get("q") || "")) return;
 
-    if (query) {
-      params.set("q", query);
-      params.set("page", "1");
-    } else {
-      params.delete("q");
-    }
+      if (trimmedQuery) {
+        params.set("q", trimmedQuery);
+        params.set("page", "1");
+      } else {
+        params.delete("q");
+        params.delete("page");
+      }
 
-    router.push(`${pathname}?${params.toString()}`);
-  };
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router],
+  );
 
   return (
-    <ButtonGroup className="w-48 px-4 pt-4 transition-all duration-300 focus-within:w-96">
-      <Input
-        type="text"
-        value={query}
-        placeholder="Search..."
-        onChange={handleChangeQuery}
-      />
-      <Button variant="outline" aria-label="Search" onClick={handleSearch}>
-        <SearchIcon />
-      </Button>
-    </ButtonGroup>
+    <form onSubmit={handleSubmit} className="px-4 pt-4">
+      <ButtonGroup className="w-48 transition-[width] duration-300 focus-within:w-96">
+        <Input
+          key={currentQuery}
+          name="q"
+          type="text"
+          defaultValue={currentQuery}
+          placeholder="Search..."
+        />
+        <Button type="submit" variant="outline" aria-label="Search">
+          <SearchIcon />
+        </Button>
+      </ButtonGroup>
+    </form>
   );
 }
